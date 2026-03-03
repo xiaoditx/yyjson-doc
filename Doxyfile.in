@@ -1,0 +1,38 @@
+# Doxyfile 1.13.2
+
+PROJECT_NAME           = yyjson
+INPUT_ENCODING         = UTF-8
+PROJECT_NUMBER         = 0.12.0
+PROJECT_BRIEF          = "高性能的C语言JSON库。"
+OUTPUT_DIRECTORY       = build/doxygen
+FULL_PATH_NAMES        = NO
+OPTIMIZE_OUTPUT_FOR_C  = YES
+MARKDOWN_ID_STYLE      = GITHUB
+INLINE_SIMPLE_STRUCTS  = YES
+TYPEDEF_HIDES_STRUCT   = YES
+EXTRACT_STATIC         = YES
+HIDE_UNDOC_MEMBERS     = YES
+SORT_MEMBER_DOCS       = NO
+LAYOUT_FILE            = doc/doxygen/DoxyLayout.xml
+INPUT                  = src/yyjson.h \
+                         README.md \
+                         doc/BuildAndTest.md \
+                         doc/API.md \
+                         doc/DataStructure.md \
+                         CHANGELOG.md
+IMAGE_PATH             = doc/images
+USE_MDFILE_AS_MAINPAGE = README.md
+VERBATIM_HEADERS       = NO
+HTML_HEADER            = doc/doxygen/theme/yyjson-header.html
+HTML_FOOTER            = doc/doxygen/theme/yyjson-footer.html
+HTML_EXTRA_STYLESHEET  = doc/doxygen/theme/doxygen-awesome.css \
+                         doc/doxygen/theme/doxygen-awesome-sidebar-only.css \
+                         doc/doxygen/theme/doxygen-awesome-sidebar-only-darkmode-toggle.css \
+                         doc/doxygen/theme/yyjson-style.css
+HTML_EXTRA_FILES       = doc/doxygen/theme/doxygen-awesome-darkmode-toggle.js
+HTML_COLORSTYLE        = LIGHT
+DISABLE_INDEX          = NO
+GENERATE_TREEVIEW      = YES
+FULL_SIDEBAR           = NO
+GENERATE_LATEX         = NO
+QUIET                  = YES

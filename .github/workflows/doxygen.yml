@@ -51,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 上传 yyjson 目录（而非 html 子目录）
+          # 上传
           path: 'yyjson/html'
 
       - name: Deploy to GitHub Pages

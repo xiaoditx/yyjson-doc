@@ -4,7 +4,10 @@ PROJECT_NAME           = yyjson
 INPUT_ENCODING         = UTF-8
 PROJECT_NUMBER         = 0.12.0
 PROJECT_BRIEF          = "高性能的C语言JSON库。"
-OUTPUT_DIRECTORY       = build/doxygen
+# 输出目录（改为直接生成到 yyjson 目录）
+OUTPUT_DIRECTORY       = yyjson
+# HTML 输出子目录（保持默认 html 即可）
+HTML_OUTPUT            = html
 FULL_PATH_NAMES        = NO
 OPTIMIZE_OUTPUT_FOR_C  = YES
 MARKDOWN_ID_STYLE      = GITHUB

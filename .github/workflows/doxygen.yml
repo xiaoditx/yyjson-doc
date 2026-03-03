@@ -1,0 +1,71 @@
+name: Doxygen Build and Deploy to GitHub Pages
+
+# 触发条件：仓库内任意文件变动（push/PR 事件）
+on:
+  push:
+    branches: [ main, master ]  # 根据你的主分支名称调整
+    paths:
+      - '**'  # 匹配所有文件
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - '**'
+
+# 设置权限：允许部署 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 配置工作流并发控制：避免重复部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 拉取仓库代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 拉取完整历史（Doxygen 可能需要）
+
+      # 2. 安装 Doxygen 依赖
+      - name: Install Doxygen
+        run: |
+          sudo apt update
+          sudo apt install -y doxygen graphviz  # graphviz 可选，用于生成图表
+
+      # 3. 执行 Doxygen 构建文档
+      - name: Build Doxygen documentation
+        run: |
+          # 执行构建命令，生成文档到 build/doxygen/html
+          doxygen Doxyfile.in
+          # 验证构建结果
+          if [ ! -d "build/doxygen/html" ]; then
+            echo "Error: Doxygen build failed, html directory not found!"
+            exit 1
+          fi
+          # 查看构建产物目录结构（调试用）
+          ls -la build/doxygen/html/
+
+      # 4. 配置 GitHub Pages 部署环境
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 5. 上传构建产物作为部署工件
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 指定 Doxygen 构建产物的目录
+          path: 'build/doxygen/html'
+
+      # 6. 部署到 GitHub Pages（挂载到 /yyjson 路径）
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          # 部署路径前缀：对应 xiaoditx.github.io/yyjson
+          target_path: '/yyjson'

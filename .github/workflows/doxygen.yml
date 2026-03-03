@@ -1,5 +1,6 @@
 name: Doxygen Build and Deploy to GitHub Pages
 
+# 触发条件：仓库任意文件变动
 on:
   push:
     branches: [ main, master ]
@@ -8,11 +9,13 @@ on:
     branches: [ main, master ]
     paths: ['**']
 
+# 必要的 Pages 部署权限
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# 避免重复部署
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -21,39 +24,49 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+      # 1. 拉取仓库代码
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 2. 安装 Doxygen 依赖
       - name: Install Doxygen
         run: |
           sudo apt update
           sudo apt install -y doxygen graphviz
 
+      # 3. 构建 Doxygen 文档（无需改路径，保持原有输出）
       - name: Build Doxygen documentation
         run: |
-          # 提前创建 yyjson 目录（Doxygen 无法自动创建）
-          mkdir -p yyjson
-          # 执行构建（生成到 yyjson/html）
+          # 提前创建输出目录（解决多层目录无法自动创建的问题）
+          mkdir -p build/doxygen
+          
+          # 执行 Doxygen 构建
           doxygen Doxyfile.in
-          # 验证核心文件是否存在
-          if [ ! -f "yyjson/html/index.html" ]; then
-            echo "Error: index.html not found in yyjson/html!"
+          
+          # 关键验证：确保 index.html 存在（文档构建成功的核心标志）
+          if [ ! -f "build/doxygen/html/index.html" ]; then
+            echo "❌ Error: Doxygen 构建失败，未找到 index.html！"
             exit 1
           fi
-          # 查看产物结构
-          ls -la yyjson/html/
+          
+          # 查看构建产物（调试用）
+          echo "✅ 构建产物列表："
+          ls -la build/doxygen/html/
 
-      - name: Setup Pages
+      # 4. 配置 Pages 环境
+      - name: Setup GitHub Pages
         uses: actions/configure-pages@v4
 
-      - name: Upload artifact
+      # 5. 上传构建产物（直接上传 html 目录，部署到 Pages 根目录）
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # 上传 yyjson 目录（而非 html 子目录）
-          path: 'yyjson'
+          # 直接上传 Doxygen 生成的 html 目录
+          path: 'build/doxygen/html'
 
+      # 6. 部署到 Pages（默认路径就是 /yyjson-doc）
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-        # 移除无效的 target_path 参数
+        # 无需任何额外参数，默认部署到仓库名路径

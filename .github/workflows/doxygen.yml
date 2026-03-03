@@ -41,13 +41,18 @@ jobs:
       # 3. 执行 Doxygen 构建文档
       - name: Build Doxygen documentation
         run: |
+          # 关键修复：提前创建输出目录（解决无法自动创建多层目录的问题）
+          mkdir -p build/doxygen
+          
           # 执行构建命令，生成文档到 build/doxygen/html
           doxygen Doxyfile.in
+          
           # 验证构建结果
           if [ ! -d "build/doxygen/html" ]; then
             echo "Error: Doxygen build failed, html directory not found!"
             exit 1
           fi
+          
           # 查看构建产物目录结构（调试用）
           ls -la build/doxygen/html/
 

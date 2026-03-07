@@ -1,10 +1,7 @@
 API
 ===
 
-> @note
-> 翻译最后更新时间：2026/2/27 13:01
-> 
-> 翻译质量反馈：[暂无](https://github.com)
+@note 翻译最后更新时间：2026/2/27 13:01<br>翻译质量反馈：[yyjson文档中文翻译](https://xiaoditx.github.io/moments/2026-3/07-2115/)
 
 本文档包含了yyjson库所有API的用法和示例。
 

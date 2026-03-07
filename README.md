@@ -8,6 +8,8 @@
 
 一个使用 ANSI C 开发的高性能 JSON 库。
 
+@note 翻译最后更新时间：2026/2/27 13:01<br>翻译质量反馈：[yyjson文档中文翻译](https://xiaoditx.github.io/moments/2026-3/07-2115/)
+
 # 特点
 
 - **高速** ：在现代 CPU 上每秒就能处理数 GB 的 JSON 数据。
@@ -29,7 +31,7 @@
 
 基准测试项目和数据集：[yyjson_benchmark](https://github.com/ibireme/yyjson_benchmark)
 
-如果大部分 JSON 字段在编译时已知，simdjson 新的 `On Demand` API 速度更快。
+如果大部分 JSON 字段在编译时已知，simdjson 新推出的 `On Demand` API 速度更快些。
 此基准测试项目仅测试 DOM API，后续将添加新的基准测试。
 
 #### AWS EC2 (AMD EPYC 7R32, gcc 9.3)
@@ -38,11 +40,11 @@
 
 | twitter.json     | 解析 (GB/s) | 生成 (GB/s) |
 | ---------------- | --------- | --------- |
-| yyjson (原位解析)    | 1.80      | 1.51      |
+| yyjson (就地解析)    | 1.80      | 1.51      |
 | yyjson           | 1.72      | 1.42      |
 | simdjson         | 1.52      | 0.61      |
 | sajson           | 1.16      |           |
-| rapidjson (原位解析) | 0.77      |           |
+| rapidjson (就地解析) | 0.77      |           |
 | rapidjson (utf8) | 0.26      | 0.39      |
 | cjson            | 0.32      | 0.17      |
 | jansson          | 0.05      | 0.11      |
@@ -53,11 +55,11 @@
 
 | twitter.json     | 解析 (GB/s) | 生成 (GB/s) |
 | ---------------- | --------- | --------- |
-| yyjson (原位解析)    | 3.51      | 2.41      |
+| yyjson (就地解析)    | 3.51      | 2.41      |
 | yyjson           | 2.39      | 2.01      |
 | simdjson         | 2.19      | 0.80      |
 | sajson           | 1.74      |           |
-| rapidjson (原位解析) | 0.75      |           |
+| rapidjson (就地解析) | 0.75      |           |
 | rapidjson (utf8) | 0.30      | 0.58      |
 | cjson            | 0.48      | 0.33      |
 | jansson          | 0.09      | 0.24      |
@@ -76,9 +78,9 @@
 ### 为获得更佳性能，yyjson更倾向于：
 
 * 具备以下特性的现代处理器：
-  * 高指令级并行度
-  * 优秀的分支预测器
-  * 低非对齐内存访问开销
+  * 指令级并行度高
+  * 拥有优秀的分支预测器
+  * 非对齐内存访问开销低
 * 优化能力出色的现代编译器（如 clang）
 
 # 示例代码
@@ -86,7 +88,7 @@
 ### 读取 JSON 字符串
 
 ```c
-const char *json = "{\"name\":\"Mash\",\"star\":4,\"hits\":[2,2,1,3]}";
+const char *json = "{\"name\":\"Yumo\",\"star\":4,\"hits\":[2,2,1,3]}";
 
 // 读取 JSON 并获取根节点
 yyjson_doc *doc = yyjson_read(json, strlen(json), 0);

@@ -45,13 +45,13 @@
 
 
 /*==============================================================================
- * MARK: - Compile-time Options
+ * MARK: - 编译期选项
  *============================================================================*/
 
 /*
- Define as 1 to disable JSON reader at compile-time.
- This disables functions with "read" in their name.
- Reduces binary size by about 60%.
+ 定义为 1 可以在编译期关闭JSON读取器。
+ 这个宏会剔除所有名字里带 “read” 的函数。
+ 这将使编译所得的二进制文件大小减小约60%。
  */
 #ifndef YYJSON_DISABLE_READER
 #endif

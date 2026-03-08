@@ -57,3 +57,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
         # 移除无效的 target_path 参数
+      - name: Debug Doxygen config
+        run: |
+          doxygen -v
+          grep -E '^(MARKDOWN_SUPPORT|FILTER_PATTERNS)' Doxyfile.in

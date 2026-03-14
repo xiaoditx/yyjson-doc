@@ -28,8 +28,25 @@ jobs:
 
       - name: Install Doxygen
         run: |
+          # 1. 定义版本和下载链接（这里使用1.10.0）
+          DOXYGEN_VERSION="1.10.0"
+          DOWNLOAD_URL="https://github.com/doxygen/doxygen/releases/download/Release_1_10_0/doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz"
+
+          # 2. 下载、解压
+          wget -O doxygen.tar.gz $DOWNLOAD_URL
+          tar -xzf doxygen.tar.gz
+
+          # 3. 进入目录并安装（sudo make install 会将二进制文件复制到 /usr/local/bin）
+          cd doxygen-${DOXYGEN_VERSION}
+          sudo make install
+
+          # 4. 验证版本
+          doxygen --version
+
+      - name: Install Graphviz
+        run: |
           sudo apt update
-          sudo apt install -y doxygen graphviz
+          sudo apt install -y graphviz
 
       - name: Build Doxygen documentation
         run: |
